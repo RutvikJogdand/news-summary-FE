@@ -51,7 +51,9 @@ const NewsCard = ({ article }) => {
             )}
         </CardActions>
         <div className='btn'>
-            <Button onClick={handleSummaryClick} variant="outlined" size="small">{article.summary && showSummary ? 'Close Summary' : 'Summary'}</Button>
+            <Button onClick={handleSummaryClick} variant="outlined" size="small">
+                {article.summary && showSummary ? 'Close Summary' : 'View Summary'}
+            </Button>
         </div>
     </Card>
   );
