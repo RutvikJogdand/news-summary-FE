@@ -56,7 +56,7 @@ const newsSlice = createSlice({
       })
       .addCase(fetchNews.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.articles = action.payload.articles;
+        state.articles = action.payload.articles.filter(item => item.title !== "[Removed]");
         state.totalPages = Math.ceil(action.payload.totalResults / 5);
       })
       .addCase(fetchNews.rejected, (state, action) => {
@@ -68,9 +68,10 @@ const newsSlice = createSlice({
       })
       .addCase(fetchSummary.fulfilled, (state, action) => {
         state.summaryStatus = 'succeeded';
-        state.articles = state.articles.map((article) =>
-          article.title === action.payload.title ? action.payload : article
-        );
+        const index = state.articles.findIndex(article => article.title === action.payload.title);
+        if (index !== -1) {
+          state.articles[index].summary = action.payload.summary;
+        }
       })
       .addCase(fetchSummary.rejected, (state, action) => {
         state.summaryStatus = 'failed';
