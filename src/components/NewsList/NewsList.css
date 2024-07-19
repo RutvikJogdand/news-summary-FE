@@ -1,0 +1,15 @@
+.flex-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+
+.main-container{
+    padding: 10px;
+    background-color: #c9c9c96e;
+}
+
+.text-boxes-container > div{
+    margin: 20px;
+}
