@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import NewsCard from '../NewsCard/NewsCard';
 import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField';
-// import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
-// import Container from '@mui/material/Container';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
@@ -19,11 +17,9 @@ import Slide from '@mui/material/Slide';
 import { fetchNews, setQuery, setFromDate, setToDate, setPage } from '../../redux/newsSlice';
 import './NewsList.css'
 
+// Hides the App Bar when scrolling down and brings it back up when scrolling up:
 function HideOnScroll(props) {
     const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
     const trigger = useScrollTrigger({
       target: window ? window() : undefined,
     });
@@ -35,6 +31,7 @@ function HideOnScroll(props) {
     );
 }
 
+// Scroll to top icon:
 function ScrollTop(props) {
     const { children, window } = props;
     const trigger = useScrollTrigger({
@@ -66,7 +63,7 @@ function ScrollTop(props) {
         </Box>
       </Fade>
     );
-  }
+}
 
 const NewsList = (props) => {
   const dispatch = useDispatch();
@@ -114,10 +111,11 @@ const NewsList = (props) => {
      <HideOnScroll {...props}>
       <AppBar color='inherit'>
         <Toolbar>
+          <Typography variant="p" component="div">Search News App</Typography>
           <Typography variant="h6" component="div">
             <div className='text-boxes-container'>
-                <TextField label="Search" variant="outlined" value={query} onChange={handleSearchChange} />
-                <TextField label="From" type="date" InputLabelProps={{ shrink: true }} value={from} onChange={handleFromDateChange} />
+                <TextField placeholder="Type to search for news" label="Search" variant="outlined" value={query} onChange={handleSearchChange} />
+                <TextField label="Published From" type="date" InputLabelProps={{ shrink: true }} value={from} onChange={handleFromDateChange} />
                 <TextField label="To" type="date" InputLabelProps={{ shrink: true }} value={to} onChange={handleToDateChange} />
             </div>
           </Typography>
@@ -134,18 +132,18 @@ const NewsList = (props) => {
     <div className='main-container'>
 
       <Stack spacing={2}>
-        {/* <div className='flex-container'>
-            <TextField label="Search" variant="outlined" value={query} onChange={handleSearchChange} />
-            <TextField label="From" type="date" InputLabelProps={{ shrink: true }} value={from} onChange={handleFromDateChange} />
-            <TextField label="To" type="date" InputLabelProps={{ shrink: true }} value={to} onChange={handleToDateChange} />
-        </div> */}
         {status === 'loading' && <p>Loading...</p>}
         <div className='flex-container'>
             {articles.map((article, index) => (
             <NewsCard key={index} article={article} />
             ))}
         </div>
-        <Pagination style={{margin:'auto'}} count={totalPages} page={page} onChange={handlePageChange} />
+        {
+          articles && articles.length > 0 ?
+          <Pagination style={{margin:'auto'}} count={totalPages} page={page} onChange={handlePageChange} />
+          :
+          <p style={{margin:'auto'}}>Nothing to display</p>
+        }
       </Stack>
     </div>
     <ScrollTop {...props}>

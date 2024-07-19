@@ -33,6 +33,9 @@ const NewsCard = ({ article }) => {
             <Typography gutterBottom variant="h5" component="div">
                 {article.title}
             </Typography>
+              <small className='small-heading'>Source: {article.source.name}</small> <br/>
+              <small className='small-heading'>Published on: {new Date(article.publishedAt).toDateString()} </small>
+            <hr/>
             <Typography variant="body2" color="text.secondary">
                 {article.description}
             </Typography>
